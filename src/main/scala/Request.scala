@@ -1,5 +1,8 @@
+import scala.util.{Failure, Success}
 import scalaj.http._
-import concurrent.Future
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Success, Failure}
 
 /**
  * This class contains general API request methods
@@ -14,43 +17,24 @@ class Request(apiKey: String) {
    * Constructs the root API endpoint and returns it
    * @param resource The type of resource
    *                 Could be one of 'gifs', 'stickers', 'sticker'
+   * @param method The giphy endpoint method requested
    * @return String
    */
-  private def buildRootApiEndpoint(resource: String): String = {
-    apiHost + "/" + apiVersion + "/" + resource
-  }
-
-  /**
-   *
-   * @param request The HTTP request object
-   * @param params Params to be added
-   * @return HTTPRequest
-   */
-  private def addQueryParams(request: HttpRequest, params: Map[String, String]): HttpRequest = {
-    for((k, v) <- params) {
-      request.param(k, v)
-    }
-
-    request
+  private def buildApiEndpoint(resource: String, method: String): String = {
+    apiHost + "/" + apiVersion + "/" + resource + "/" + method
   }
 
   /**
    *
    * @param verb The HTTP verb
    * @param params Parameters to be sent as query params
-   * @return Future[HttpRequest]
+   * @return HTTPResponse[String]
    */
-  def makeNew(verb: String, params: Map[String, String], resource: String):Future[HttpRequest] = {
-    val endpoint = buildRootApiEndpoint(resource)
-    val request = Http(endpoint).param("api_key", apiKey)
+  def makeNew(verb: String, params: Map[String, String], resource: String, method: String):HttpResponse[String] = {
+    val endpoint = buildApiEndpoint(resource, method)
+    val queryParams = params + ("api_key" -> apiKey)
 
-    if (params.nonEmpty) {
-      addQueryParams(request, params)
-    }
-
-    Future[HttpRequest] {
-      request
-    }
+    Http(endpoint).params(queryParams).asString
   }
 }
 
