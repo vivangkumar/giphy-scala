@@ -1,5 +1,5 @@
 /**
- *
+ * Main entry point to call Giphy endpoints
  * @param apiKey Giphy apiKey
  */
 class Giphy(apiKey: String) {
@@ -33,5 +33,16 @@ class Giphy(apiKey: String) {
   def getGifsById(gifIds: List[String]): Any = {
     val params = Map("ids" -> gifIds.mkString(","))
     ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "")
+  }
+
+  /**
+   *
+   * @param params Options to pass to the translate endpoint
+   *               s -> term or phrase to translate into a GIF
+   *               rating ->  limit results to those rated (y,g, pg, pg-13 or r)
+   * @return
+   */
+  def translate(params: Map[String, String]): Any = {
+    ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "translate")
   }
 }

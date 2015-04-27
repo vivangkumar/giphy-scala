@@ -20,7 +20,7 @@ class Request(apiKey: String) {
     val endpointWithoutMethod = apiHost + "/" + apiVersion + "/" + resource
 
     if (method.nonEmpty) {
-      endpointWithoutMethod + "/" + method
+      return endpointWithoutMethod + "/" + method
     }
 
     endpointWithoutMethod
