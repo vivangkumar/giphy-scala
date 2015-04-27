@@ -6,10 +6,10 @@ class Giphy(apiKey: String) {
   /**
    * Queries the search endpoint
    * @param params Options to send to the search endpoint
-   *               'q' (required) -> search query term
-   *               'limit' (optional) -> number of results to return
-   *               'offset' (optional) -> results offset
-   *               'rating' (optional) ->  (y,g, pg, pg-13 or r)
+   *               'q' -> search query term
+   *               'limit' -> number of results to return
+   *               'offset' -> results offset
+   *               'rating' ->  (y,g, pg, pg-13 or r)
    * @return Any
    */
   def search(params: Map[String, String]): Any = {
@@ -38,8 +38,8 @@ class Giphy(apiKey: String) {
   /**
    *
    * @param params Options to send to the translate endpoint
-   *               s -> term or phrase to translate into a GIF
-   *               rating ->  limit results to those rated (y,g, pg, pg-13 or r)
+   *               's'-> term or phrase to translate into a GIF
+   *               'rating' ->  limit results to those rated (y,g, pg, pg-13 or r)
    * @return Any
    */
   def translate(params: Map[String, String]): Any = {
@@ -49,11 +49,21 @@ class Giphy(apiKey: String) {
   /**
    *
    * @param params Options to send to the random endpoint
-   *               tag -> the GIF tag to limit randomness by
-   *               rating -> limit results to those rated (y,g, pg, pg-13 or r)
+   *               'tag' -> the GIF tag to limit randomness by
+   *               'rating' -> limit results to those rated (y,g, pg, pg-13 or r)
    * @return Any
    */
-  def random(params: Map[String, String]): Any = {
-    ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "random")
+  def random(params: Option[Map[String, String]]): Any = {
+    ApiRequest(apiKey).makeNew("GET", params, "gifs", "random")
+  }
+
+  /**
+   *
+   * @param params Options to send to the trending endpoint
+   *               'limit' -> limits the number of results returned. By default returns 25 results
+   * @return Any
+   */
+  def trending(params: Option[Map[String, String]]): Any = {
+    ApiRequest(apiKey).makeNew("GET", params, "gifs", "trending")
   }
 }
