@@ -17,7 +17,7 @@ class Giphy(apiKey: String) {
   }
 
   /**
-   *
+   * Get a GIF by ID
    * @param gifId ID of the gif requested
    * @return Any
    */
@@ -26,7 +26,7 @@ class Giphy(apiKey: String) {
   }
 
   /**
-   *
+   * Get multiple GIF by ID's
    * @param gifIds List of gif ids
    * @return Any
    */
@@ -36,7 +36,7 @@ class Giphy(apiKey: String) {
   }
 
   /**
-   *
+   * Queries the translate endpoint
    * @param params Options to send to the translate endpoint
    *               's'-> term or phrase to translate into a GIF
    *               'rating' ->  limit results to those rated (y,g, pg, pg-13 or r)
@@ -47,7 +47,7 @@ class Giphy(apiKey: String) {
   }
 
   /**
-   *
+   * Queries the random endpoint
    * @param params Options to send to the random endpoint
    *               'tag' -> the GIF tag to limit randomness by
    *               'rating' -> limit results to those rated (y,g, pg, pg-13 or r)
@@ -58,7 +58,7 @@ class Giphy(apiKey: String) {
   }
 
   /**
-   *
+   * Gets the latest trending GIF's
    * @param params Options to send to the trending endpoint
    *               'limit' -> limits the number of results returned. By default returns 25 results
    * @return Any
