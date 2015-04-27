@@ -1,8 +1,4 @@
-import scala.util.{Failure, Success}
 import scalaj.http._
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Success, Failure}
 
 /**
  * This class contains general API request methods
