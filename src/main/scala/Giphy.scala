@@ -5,7 +5,7 @@
 class Giphy(apiKey: String) {
   /**
    * Queries the search endpoint
-   * @param params Options to pass to the search endpoint
+   * @param params Options to send to the search endpoint
    *               'q' (required) -> search query term
    *               'limit' (optional) -> number of results to return
    *               'offset' (optional) -> results offset
@@ -37,12 +37,23 @@ class Giphy(apiKey: String) {
 
   /**
    *
-   * @param params Options to pass to the translate endpoint
+   * @param params Options to send to the translate endpoint
    *               s -> term or phrase to translate into a GIF
    *               rating ->  limit results to those rated (y,g, pg, pg-13 or r)
-   * @return
+   * @return Any
    */
   def translate(params: Map[String, String]): Any = {
     ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "translate")
+  }
+
+  /**
+   *
+   * @param params Options to send to the random endpoint
+   *               tag -> the GIF tag to limit randomness by
+   *               rating -> limit results to those rated (y,g, pg, pg-13 or r)
+   * @return Any
+   */
+  def random(params: Map[String, String]): Any = {
+    ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "random")
   }
 }
