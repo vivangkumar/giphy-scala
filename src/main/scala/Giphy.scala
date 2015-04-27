@@ -10,10 +10,18 @@ class Giphy(apiKey: String) {
    *               'limit' (optional) -> number of results to return
    *               'offset' (optional) -> results offset
    *               'rating' (optional) ->  (y,g, pg, pg-13 or r)
-   * @return JSON string
+   * @return Any
    */
-  def search(params: Map[String, String]): String = {
-    val request = ApiRequest(apiKey).makeNew("GET", params, "gifs", "search")
-    request.body
+  def search(params: Map[String, String]): Any = {
+    ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "search")
+  }
+
+  /**
+   *
+   * @param gifId ID of the gif requested
+   * @return Any
+   */
+  def getGifById(gifId: String): Any = {
+    ApiRequest(apiKey).makeNew("GET", None, "gifs", gifId)
   }
 }

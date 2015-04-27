@@ -21,16 +21,34 @@ class Request(apiKey: String) {
   }
 
   /**
+   * Handle HTTP responses
+   * @param response The HTTP response object
+   * @return Any (Maybe an exception or a String)
+   */
+  private def handleResponse(response: HttpResponse[String]): Any = {
+    if (response.isError) {
+      throw new Error("Error when sending request to Giphy - " + response.statusLine)
+    } else if (response.isSuccess) {
+      response.body
+    }
+  }
+
+  /**
    *
    * @param verb The HTTP verb
    * @param params Parameters to be sent as query params
+   *               This an Option - Map[String, String] or None
    * @return HTTPResponse[String]
    */
-  def makeNew(verb: String, params: Map[String, String], resource: String, method: String):HttpResponse[String] = {
+  def makeNew(verb: String, params: Option[Map[String, String]], resource: String, method: String):Any = {
     val endpoint = buildApiEndpoint(resource, method)
-    val queryParams = params + ("api_key" -> apiKey)
+    val queryParams = Map("api_key" -> apiKey)
 
-    Http(endpoint).params(queryParams).asString
+    if (params.isDefined) {
+      val queryParams = params.get + ("api_key" -> apiKey)
+    }
+
+    handleResponse(Http(endpoint).params(queryParams).asString)
   }
 }
 
