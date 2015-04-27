@@ -24,4 +24,14 @@ class Giphy(apiKey: String) {
   def getGifById(gifId: String): Any = {
     ApiRequest(apiKey).makeNew("GET", None, "gifs", gifId)
   }
+
+  /**
+   *
+   * @param gifIds List of gif ids
+   * @return Any
+   */
+  def getGifsById(gifIds: List[String]): Any = {
+    val params = Map("ids" -> gifIds.mkString(","))
+    ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "")
+  }
 }

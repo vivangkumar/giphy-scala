@@ -17,7 +17,13 @@ class Request(apiKey: String) {
    * @return String
    */
   private def buildApiEndpoint(resource: String, method: String): String = {
-    apiHost + "/" + apiVersion + "/" + resource + "/" + method
+    val endpointWithoutMethod = apiHost + "/" + apiVersion + "/" + resource
+
+    if (method.nonEmpty) {
+      endpointWithoutMethod + "/" + method
+    }
+
+    endpointWithoutMethod
   }
 
   /**
@@ -42,10 +48,10 @@ class Request(apiKey: String) {
    */
   def makeNew(verb: String, params: Option[Map[String, String]], resource: String, method: String):Any = {
     val endpoint = buildApiEndpoint(resource, method)
-    val queryParams = Map("api_key" -> apiKey)
+    var queryParams = Map("api_key" -> apiKey)
 
     if (params.isDefined) {
-      val queryParams = params.get + ("api_key" -> apiKey)
+      queryParams = params.get + ("api_key" -> apiKey)
     }
 
     handleResponse(Http(endpoint).params(queryParams).asString)
