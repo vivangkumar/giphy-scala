@@ -17,13 +17,13 @@ class Request(apiKey: String) {
    * @return String
    */
   private def buildApiEndpoint(resource: String, method: String): String = {
-    val endpointWithoutMethod = apiHost + "/" + apiVersion + "/" + resource
+    val endpoint = apiHost + "/" + apiVersion + "/" + resource
 
     if (method.nonEmpty) {
-      return endpointWithoutMethod + "/" + method
+      return endpoint + "/" + method
     }
 
-    endpointWithoutMethod
+    endpoint
   }
 
   /**

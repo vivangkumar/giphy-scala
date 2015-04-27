@@ -9,7 +9,7 @@ class Giphy(apiKey: String) {
    *               'q' -> search query term
    *               'limit' -> number of results to return
    *               'offset' -> results offset
-   *               'rating' ->  (y,g, pg, pg-13 or r)
+   *               'rating' -> (y,g, pg, pg-13 or r)
    * @return Any
    */
   def search(params: Map[String, String]): Any = {
@@ -39,7 +39,8 @@ class Giphy(apiKey: String) {
    * Queries the translate endpoint
    * @param params Options to send to the translate endpoint
    *               's'-> term or phrase to translate into a GIF
-   *               'rating' ->  limit results to those rated (y,g, pg, pg-13 or r)
+   *               'rating' -> limit results to those rated
+   *                           (y,g, pg, pg-13 or r)
    * @return Any
    */
   def translate(params: Map[String, String]): Any = {
@@ -50,7 +51,8 @@ class Giphy(apiKey: String) {
    * Queries the random endpoint
    * @param params Options to send to the random endpoint
    *               'tag' -> the GIF tag to limit randomness by
-   *               'rating' -> limit results to those rated (y,g, pg, pg-13 or r)
+   *               'rating' -> limit results to those rated
+   *                           (y,g, pg, pg-13 or r)
    * @return Any
    */
   def random(params: Option[Map[String, String]]): Any = {
@@ -60,7 +62,8 @@ class Giphy(apiKey: String) {
   /**
    * Gets the latest trending GIF's
    * @param params Options to send to the trending endpoint
-   *               'limit' -> limits the number of results returned. By default returns 25 results
+   *               'limit' -> limits the number of results returned
+   *                          By default returns 25 results
    * @return Any
    */
   def trending(params: Option[Map[String, String]]): Any = {
