@@ -46,7 +46,7 @@ class Request(apiKey: String) {
    *               This an Option - Map[String, String] or None
    * @return HTTPResponse[String]
    */
-  def makeNew(verb: String, params: Option[Map[String, String]], resource: String, method: String):Any = {
+  def makeNew(verb: String, params: Option[Map[String, String]], resource: String, method: String): Any = {
     val endpoint = buildApiEndpoint(resource, method)
     var queryParams = Map("api_key" -> apiKey)
 
