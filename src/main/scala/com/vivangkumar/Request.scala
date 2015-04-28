@@ -1,4 +1,8 @@
+package com.vivangkumar
+
 import scalaj.http._
+import org.json4s._
+import org.json4s.native.JsonMethods._
 
 /**
  * This class contains general API request methods
@@ -9,6 +13,7 @@ class Request(apiKey: String) {
   val apiHost = "http://api.giphy.com"
   val apiVersion = "v1"
 
+  implicit val formats = org.json4s.DefaultFormats
   /**
    * Constructs the root API endpoint and returns it
    * @param resource The type of resource
@@ -35,7 +40,8 @@ class Request(apiKey: String) {
     if (response.isError) {
       throw new Error("Error when sending request to Giphy - " + response.statusLine)
     } else if (response.isSuccess) {
-      response.body
+      val json = parse(response.body)
+      return json.extract[Map[String, Any]]
     }
   }
 

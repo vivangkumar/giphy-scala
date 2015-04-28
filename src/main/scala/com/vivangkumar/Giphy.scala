@@ -1,3 +1,5 @@
+package com.vivangkumar
+
 /**
  * Main entry point to call Giphy endpoints
  * @param apiKey Giphy apiKey

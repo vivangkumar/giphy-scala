@@ -8,7 +8,9 @@ This library started out trying to get familiar with Scala and learn its basics.
 
 - [scalaj-http](https://github.com/scalaj/scalaj-http)
   A simple HTTP library for Scala
-
+- [json4s](https://github.com/json4s/json4s)
+  A super fast JSON parsing library
+  
 Update dependencies using `sbt update`
 
 ## Usage
@@ -21,6 +23,7 @@ giphy.getGifById("GIF ID")
 ## API
 
 For parameters that can be passed to each method, refer to the [Giphy API Docs](https://github.com/Giphy/GiphyAPI)
+All responses are of type `Map[String, Any]`. This is after parsing the JSON string return by the Giphy API
 
 ### GIF API
 
