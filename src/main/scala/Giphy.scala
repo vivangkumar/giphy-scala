@@ -82,4 +82,16 @@ class Giphy(apiKey: String) {
   def searchStickers(params: Map[String, String]): Any = {
     ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "search")
   }
+
+  /**
+   * Queries the random sticker endpoint
+   * @param params Options to send to the random endpoint
+   *              'tag' -> the GIF tag to limit randomness by
+   *              'rating' -> limit results to those rated
+   *                          (y,g, pg, pg-13 or r)
+   * @return Any
+   */
+  def randomSticker(params: Option[Map[String, String]]): Any = {
+    ApiRequest(apiKey).makeNew("GET", params, "stickers", "random")
+  }
 }
