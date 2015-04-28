@@ -94,4 +94,29 @@ class Giphy(apiKey: String) {
   def randomSticker(params: Option[Map[String, String]]): Any = {
     ApiRequest(apiKey).makeNew("GET", params, "stickers", "random")
   }
+
+  /**
+   * Get the latest stickers trending on Giphy
+   * @param params Options to query the endpoint with
+   *               's' -> term or phrase to translate into a GIF
+   *               'limit' -> number of results to return
+   *               'offset' -> results offset
+   *               'fmt' -> Format (HTML or JSON)
+   *               'rating' -> limit results to those rated
+   *                           (y,g, pg, pg-13 or r)
+   * @return Any
+   */
+  def trendingStickers(params: Map[String, String]): Any = {
+    ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "trending")
+  }
+
+  /**
+   * Query the sticker translate endpoint
+   * @param params Options to query the endpoint with
+   *               's' -> term or phrase to translate into GIF
+   * @return Any
+   */
+  def translateStickers(params: Map[String, String]): Any ={
+    ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "translate")
+  }
 }

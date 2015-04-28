@@ -12,7 +12,7 @@ class Request(apiKey: String) {
   /**
    * Constructs the root API endpoint and returns it
    * @param resource The type of resource
-   *                 Could be one of 'gifs', 'stickers', 'sticker'
+   *                 Could be one of 'gifs' or 'stickers'
    * @param method The giphy endpoint method requested
    * @return String
    */
