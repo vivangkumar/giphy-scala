@@ -69,4 +69,17 @@ class Giphy(apiKey: String) {
   def trending(params: Option[Map[String, String]]): Any = {
     ApiRequest(apiKey).makeNew("GET", params, "gifs", "trending")
   }
+
+  /**
+   * Queries the sticker search endpoint
+   * @param params Options to send to the search endpoint
+   *               'q' -> search query term
+   *               'limit' -> number of results to return
+   *               'offset' -> results offset
+   *               'rating' -> (y,g, pg, pg-13 or r)
+   * @return Any
+   */
+  def searchStickers(params: Map[String, String]): Any = {
+    ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "search")
+  }
 }
