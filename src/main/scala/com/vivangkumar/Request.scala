@@ -35,7 +35,7 @@ class Request(apiKey: String) {
   /**
    * Handle HTTP responses
    * @param response The HTTP response object
-   * @return Any (Maybe an exception or a String)
+   * @return Either Error, Map[String, Any]
    */
   private def handleResponse(response: HttpResponse[String]): Either[Error, Map[String, Any]] = {
     if (response.isError) {
@@ -50,7 +50,7 @@ class Request(apiKey: String) {
    * @param verb The HTTP verb
    * @param params Parameters to be sent as query params
    *               This an Option - Map[String, String] or None
-   * @return HTTPResponse[String]
+   * @return Either Error, Map[String, Any]
    */
   def makeNew(verb: String,
               params: Option[Map[String, String]],

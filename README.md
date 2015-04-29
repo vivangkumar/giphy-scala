@@ -9,27 +9,28 @@ This library started out trying to get familiar with Scala and learn its basics.
 - [scalaj-http](https://github.com/scalaj/scalaj-http)
   A simple HTTP library for Scala
 - [json4s](https://github.com/json4s/json4s)
-  A super fast JSON parsing library
+  A fast JSON parsing library
   
 Update dependencies using `sbt update`
 
 ## Usage
 
 ```scala
-val giphy = new Giphy("<GIPHY API KEY>")
+val giphy = new Giphy("GIPHY API KEY")
 giphy.getGifById("GIF ID")
 ```
 
 ## API
 
 For parameters that can be passed to each method, refer to the [Giphy API Docs](https://github.com/Giphy/GiphyAPI)
-All responses are of type `Either[Map[String, Any]]`.
+All responses are of type `Either[Error, Map[String, Any]]`.
 
 You can then pattern match on the response for a `Left` or `Right` value and act on the result accordingly.
 
 ### GIF API
 
 - `search`
+
   Search all Giphy GIFs for a word or phrase.
   
   Pass in the query parameters as a `Map[String, String]`
@@ -39,6 +40,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   giphy.search(params)
   ```
 - `getGifById`
+
   Returns meta data about a GIF, by GIF id.
   
   Method takes the GIF ID as parameter.
@@ -47,6 +49,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   giphy.getGifById("GIF ID")
   ```
 - `getGifsById`
+
   A multiget version of the get GIF by ID endpoint.
   
   Pass in multiple GIF ID's using a `List[String]`
@@ -55,6 +58,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   giphy.getGifsById(List("GIF ID 1", "GIF ID 2"))
   ```
 - `translate`
+
   This is prototype endpoint for using Giphy as a translation engine for a GIF dialect. 
   The translate API draws on search, but uses the Giphy "special sauce" to handle translating from one vocabulary to another. 
   In this case, words and phrases to GIFs.
@@ -66,6 +70,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   giphy.translate(params)
   ```
 - `random`
+
   Returns a random GIF, limited by tag. 
   Excluding the tag parameter will return a random GIF from the Giphy catalog.
   
@@ -77,6 +82,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   giphy.translate(params)
   ```
 - `trending`
+
   Fetch GIFs currently trending online.
   
   Parameter is an `Option[Map[String, String]]`
@@ -89,6 +95,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
 ### Stickers API
 
 - `searchStickers`
+
   Replicates the functionality and requirements of the classic Giphy search, 
   but returns animated stickers rather than gifs.
   
@@ -99,7 +106,8 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   giphy.stickerSearch(params)
   ```
 - `randomSticker`
-  Returns a spotaneously selected sticker from Giphy's sticker collection.
+
+  Returns a spontaneously selected sticker from Giphy's sticker collection.
   
   Pass in query parameters as a `Option[Map[String, String]]`
   
@@ -107,6 +115,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   giphy.randomSticker(None)
   ```
 - `trendingStickers`
+
   Get the latest stickers trending on Giphy.
   
   Pass in the query parameters as a `Map[String, String]`
@@ -115,6 +124,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   giphy.trendingStickers(Map("s" -> "TERM"))
   ```
 - `translateStickers`
+
   Using the same alogirithm as the GIF translate endpoint, 
   the sticker translate endpoint turns words into stickers.
   
@@ -127,13 +137,12 @@ You can then pattern match on the response for a `Left` or `Right` value and act
 
 ## Notes
 
-- If the request is not successful, an `Error` will be thrown along with an explanation.
+- If the request is not successful, an `Error` will be accessible using the `Left` value.
 
 ## TODO
 
-- Write tests
-- Check for required parameters
-- Use `Either` for failures
+- Improve tests
+- Check for required parameters and validation
 - Potentially, include Async versions using `Futures`
 
   
