@@ -1,5 +1,7 @@
 # giphy-scala
 
+[![Build Status](https://travis-ci.org/vivangkumar/giphy-scala.svg?branch=master)](https://travis-ci.org/vivangkumar/giphy-scala)
+
 A scala library to interact with the [Giphy API](https://github.com/Giphy/GiphyAPI).
 
 This library started out trying to get familiar with Scala and learn its basics.
