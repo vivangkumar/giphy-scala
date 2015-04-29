@@ -37,11 +37,11 @@ class Request(apiKey: String) {
    * @param response The HTTP response object
    * @return Any (Maybe an exception or a String)
    */
-  private def handleResponse(response: HttpResponse[String]): Any = {
+  private def handleResponse(response: HttpResponse[String]): Either[Error, Map[String, Any]] = {
     if (response.isError) {
-      throw new Error("Error when sending request to Giphy - " + response.statusLine)
-    } else if (response.isSuccess) {
-      parse(response.body).extract[Map[String, Any]]
+      Left(new Error("Error when sending request to Giphy - " + response.statusLine))
+    } else {
+      Right(parse(response.body).extract[Map[String, Any]])
     }
   }
 
@@ -52,7 +52,9 @@ class Request(apiKey: String) {
    *               This an Option - Map[String, String] or None
    * @return HTTPResponse[String]
    */
-  def makeNew(verb: String, params: Option[Map[String, String]], resource: String, method: String): Any = {
+  def makeNew(verb: String,
+              params: Option[Map[String, String]],
+              resource: String, method: String): Either[Error, Map[String, Any]] = {
     val endpoint = buildApiEndpoint(resource, method)
     var queryParams = Map("api_key" -> apiKey)
 

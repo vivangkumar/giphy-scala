@@ -14,7 +14,7 @@ class Giphy(apiKey: String) {
    *               'rating' -> (y,g, pg, pg-13 or r)
    * @return Any
    */
-  def search(params: Map[String, String]): Any = {
+  def search(params: Map[String, String]): Either[Error, Map[String, Any]] = {
     ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "search")
   }
 
@@ -23,7 +23,7 @@ class Giphy(apiKey: String) {
    * @param gifId ID of the gif requested
    * @return Any
    */
-  def getGifById(gifId: String): Any = {
+  def getGifById(gifId: String): Either[Error, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", None, "gifs", gifId)
   }
 
@@ -32,7 +32,7 @@ class Giphy(apiKey: String) {
    * @param gifIds List of gif ids
    * @return Any
    */
-  def getGifsById(gifIds: List[String]): Any = {
+  def getGifsById(gifIds: List[String]): Either[Error, Map[String, Any]]  = {
     val params = Map("ids" -> gifIds.mkString(","))
     ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "")
   }
@@ -45,7 +45,7 @@ class Giphy(apiKey: String) {
    *                           (y,g, pg, pg-13 or r)
    * @return Any
    */
-  def translate(params: Map[String, String]): Any = {
+  def translate(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "translate")
   }
 
@@ -57,7 +57,7 @@ class Giphy(apiKey: String) {
    *                           (y,g, pg, pg-13 or r)
    * @return Any
    */
-  def random(params: Option[Map[String, String]]): Any = {
+  def random(params: Option[Map[String, String]]): Either[Error, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", params, "gifs", "random")
   }
 
@@ -68,7 +68,7 @@ class Giphy(apiKey: String) {
    *                          By default returns 25 results
    * @return Any
    */
-  def trending(params: Option[Map[String, String]]): Any = {
+  def trending(params: Option[Map[String, String]]): Either[Error, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", params, "gifs", "trending")
   }
 
@@ -81,7 +81,7 @@ class Giphy(apiKey: String) {
    *               'rating' -> (y,g, pg, pg-13 or r)
    * @return Any
    */
-  def searchStickers(params: Map[String, String]): Any = {
+  def searchStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "search")
   }
 
@@ -93,7 +93,7 @@ class Giphy(apiKey: String) {
    *                          (y,g, pg, pg-13 or r)
    * @return Any
    */
-  def randomSticker(params: Option[Map[String, String]]): Any = {
+  def randomSticker(params: Option[Map[String, String]]): Either[Error, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", params, "stickers", "random")
   }
 
@@ -108,7 +108,7 @@ class Giphy(apiKey: String) {
    *                           (y,g, pg, pg-13 or r)
    * @return Any
    */
-  def trendingStickers(params: Map[String, String]): Any = {
+  def trendingStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "trending")
   }
 
@@ -118,7 +118,7 @@ class Giphy(apiKey: String) {
    *               's' -> term or phrase to translate into GIF
    * @return Any
    */
-  def translateStickers(params: Map[String, String]): Any ={
+  def translateStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  ={
     ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "translate")
   }
 }
