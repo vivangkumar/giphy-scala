@@ -14,6 +14,7 @@ class Request(apiKey: String) {
   val apiVersion = "v1"
 
   implicit val formats = org.json4s.DefaultFormats
+
   /**
    * Constructs the root API endpoint and returns it
    * @param resource The type of resource
@@ -40,8 +41,7 @@ class Request(apiKey: String) {
     if (response.isError) {
       throw new Error("Error when sending request to Giphy - " + response.statusLine)
     } else if (response.isSuccess) {
-      val json = parse(response.body)
-      return json.extract[Map[String, Any]]
+      parse(response.body).extract[Map[String, Any]]
     }
   }
 
