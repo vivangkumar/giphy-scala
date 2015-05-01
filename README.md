@@ -127,7 +127,7 @@ You can then pattern match on the response for a `Left` or `Right` value and act
   ```
 - `translateStickers`
 
-  Using the same alogirithm as the GIF translate endpoint, 
+  Using the same algorithm as the GIF translate endpoint, 
   the sticker translate endpoint turns words into stickers.
   
   Pass in parameters as a `Map[String, String]`
@@ -140,11 +140,12 @@ You can then pattern match on the response for a `Left` or `Right` value and act
 ## Notes
 
 - If the request is not successful, an `Error` will be accessible using the `Left` value.
+- Erros may be returned for two reasons. First, if something went wrong with the HTTP request.
+  Second, if validation fails. That is, if required parameters are absent.
 
 ## TODO
 
-- Improve tests
-- Check for required parameters and validation
+- Error classes
 - Potentially, include Async versions using `Futures`
 
   
