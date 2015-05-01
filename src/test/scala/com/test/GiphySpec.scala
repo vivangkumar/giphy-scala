@@ -18,7 +18,13 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return response with type Map[String, Any]") {
         val response = giphy.search(Map("q" -> "star wars"))
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
+      }
+
+      it("should return an error if there was a validation failure") {
+        val response = giphy.search(Map("limit" -> "25"))
+
+        response.left.value shouldBe a [Error]
       }
     }
 
@@ -26,7 +32,13 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return a response with type Map[String, Any]") {
         val response = giphy.getGifById("feqkVgjJpYtjy")
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
+      }
+
+      it("should return an error if the ID is empty") {
+        val response = giphy.getGifById("")
+
+        response.left.value shouldBe a [Error]
       }
     }
 
@@ -34,7 +46,13 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return a response wtih type Map[String, Any]") {
         val response = giphy.getGifsById(List("7rzbxdu0ZEXLy", "feqkVgjJpYtjy"))
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
+      }
+
+      it("should return an error on passing an empty list") {
+        val response = giphy.getGifsById(List())
+
+        response.left.value shouldBe a [Error]
       }
     }
 
@@ -42,7 +60,13 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return a response with type Map[String, Any]") {
         val response = giphy.translate(Map("s" -> "star wars"))
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
+      }
+
+      it("should return an error when a required param is missing") {
+        val response = giphy.translate(Map("limit" -> "25"))
+
+        response.left.value shouldBe a [Error]
       }
     }
 
@@ -50,7 +74,7 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return a random GIF with type Map[String, Any]") {
         val response = giphy.random(Some(Map("tag" -> "american psycho")))
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
       }
     }
 
@@ -58,7 +82,7 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return the latest trending GIF's with type Map[String, Any]") {
         val response = giphy.random(None)
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
       }
     }
 
@@ -66,7 +90,13 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return animated stickers of type Map[String, Any]") {
         val response = giphy.searchStickers(Map("q" -> "christian bale"))
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
+      }
+
+      it("should return an error if there was a validation failure") {
+        val response = giphy.searchStickers(Map("limit" -> "25"))
+
+        response.left.value shouldBe a [Error]
       }
     }
 
@@ -74,7 +104,7 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return a response with type Map[String, Any]") {
         val response = giphy.randomSticker(None)
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
       }
     }
 
@@ -82,7 +112,13 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return a response of type Map[String, Any]") {
         val response = giphy.trendingStickers(Map("s" -> "star wars"))
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
+      }
+
+      it("should return an error when a required param is missing") {
+        val response = giphy.trendingStickers(Map("limit" -> "25"))
+
+        response.left.value shouldBe a [Error]
       }
     }
 
@@ -90,7 +126,13 @@ class GiphySpec extends FunSpec with EitherValues {
       it("should return a reponse of type Map[String, Any]") {
         val response = giphy.translateStickers(Map("s" -> "star wars"))
 
-        response.right.value shouldBe a [Map[String, Any]]
+        response.right.value shouldBe a [Map[_, _]]
+      }
+
+      it("should return an error when a required param is missing") {
+        val response = giphy.translateStickers(Map("limit" -> "25"))
+
+        response.left.value shouldBe a [Error]
       }
     }
   }
