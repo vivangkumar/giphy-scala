@@ -35,8 +35,9 @@ class Giphy(apiKey: String) {
    * @return Either Error, Map[String, Any]
    */
   def getGifsById(gifIds: List[String]): Either[Error, Map[String, Any]]  = {
+    val validation = CheckList(gifIds)
     val params = Map("ids" -> gifIds.mkString(","))
-    ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "")
+    ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "gifs", "")
   }
 
   /**
