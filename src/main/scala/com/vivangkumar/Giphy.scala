@@ -15,7 +15,8 @@ class Giphy(apiKey: String) {
    * @return Either Error, Map[String, Any]
    */
   def search(params: Map[String, String]): Either[Error, Map[String, Any]] = {
-    ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "search")
+    val validation = CheckRequiredParams("q", params)
+    ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "gifs", "search")
   }
 
   /**
@@ -24,7 +25,8 @@ class Giphy(apiKey: String) {
    * @return Either Error, Map[String, Any]
    */
   def getGifById(gifId: String): Either[Error, Map[String, Any]]  = {
-    ApiRequest(apiKey).makeNew("GET", None, "gifs", gifId)
+    val validation = CheckEmptyParam(gifId)
+    ApiRequest(apiKey).validateAndMake(validation, "GET", None, "gifs", gifId)
   }
 
   /**
@@ -46,7 +48,8 @@ class Giphy(apiKey: String) {
    * @return Either Error, Map[String, Any]
    */
   def translate(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
-    ApiRequest(apiKey).makeNew("GET", Some(params), "gifs", "translate")
+    val validation = CheckRequiredParams("s", params)
+    ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "gifs", "translate")
   }
 
   /**
@@ -82,7 +85,8 @@ class Giphy(apiKey: String) {
    * @return Either Error, Map[String, Any]
    */
   def searchStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
-    ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "search")
+    val validation = CheckRequiredParams("q", params)
+    ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "stickers", "search")
   }
 
   /**
@@ -109,7 +113,8 @@ class Giphy(apiKey: String) {
    * @return Either Error, Map[String, Any]
    */
   def trendingStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
-    ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "trending")
+    val validation = CheckRequiredParams("s", params)
+    ApiRequest(apiKey).validateAndMake(validation,"GET", Some(params), "stickers", "trending")
   }
 
   /**
@@ -118,7 +123,8 @@ class Giphy(apiKey: String) {
    *               's' -> term or phrase to translate into GIF
    * @return Either Error, Map[String, Any]
    */
-  def translateStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  ={
-    ApiRequest(apiKey).makeNew("GET", Some(params), "stickers", "translate")
+  def translateStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
+    val validation = CheckRequiredParams("s", params)
+    ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "stickers", "translate")
   }
 }

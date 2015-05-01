@@ -12,6 +12,7 @@ import org.json4s.native.JsonMethods._
 class Request(apiKey: String) {
   val apiHost = "http://api.giphy.com"
   val apiVersion = "v1"
+  val validator = new Validator()
 
   implicit val formats = org.json4s.DefaultFormats
 
@@ -50,6 +51,8 @@ class Request(apiKey: String) {
    * @param verb The HTTP verb
    * @param params Parameters to be sent as query params
    *               This an Option - Map[String, String] or None
+   * @param resource Resource requested
+   * @param method The Giphy endpoint method
    * @return Either Error, Map[String, Any]
    */
   def makeNew(verb: String,
@@ -63,6 +66,26 @@ class Request(apiKey: String) {
     }
 
     handleResponse(Http(endpoint).params(queryParams).asString)
+  }
+
+  /**
+   * Validate and make a request
+   * @param v Validator
+   * @param verb The HTTP verb to make a request
+   * @param params Parameters to pass
+   * @param resource Resource requested
+   * @param method The Giphy endpoint method
+   * @return Either Error, Map[String, Any]
+   */
+  def validateAndMake(v: ValidationRule,
+                      verb: String,
+                      params: Option[Map[String, String]],
+                      resource: String,
+                      method: String): Either[Error, Map[String, Any]] = {
+    validator.validate(v) match {
+      case Left(value) => Left(value)
+      case Right(value) => makeNew(verb, params, resource, method)
+    }
   }
 }
 
