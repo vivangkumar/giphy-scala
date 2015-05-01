@@ -34,5 +34,6 @@ class Validator {
       } else {
         Left(new Error("Parameter " + param + " is empty"))
       }
+    case _ => Left(new Error("Invalid validation rule"))
   }
 }
