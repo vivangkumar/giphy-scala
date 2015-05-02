@@ -25,7 +25,7 @@ giphy.getGifById("GIF ID")
 ## API
 
 For parameters that can be passed to each method, refer to the [Giphy API Docs](https://github.com/Giphy/GiphyAPI)
-All responses are of type `Either[GiphyException, Map[String, Any]]`.
+All responses are of type `GiphyResponse` which is an alias for `Either[GiphyException, Map[String, Any]]`.
 
 You can then pattern match on the response for a `Left` or `Right` value and act on the result accordingly.
 

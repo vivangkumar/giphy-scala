@@ -1,5 +1,7 @@
 package com.vivangkumar
 
+import com.vivangkumar.Types._
+
 import scalaj.http._
 import org.json4s._
 import org.json4s.native.JsonMethods._
@@ -36,9 +38,9 @@ class Request(apiKey: String) {
   /**
    * Handle HTTP responses
    * @param response The HTTP response object
-   * @return Either GiphyException, Map[String, Any]
+   * @return GiphyResponse
    */
-  private def handleResponse(response: HttpResponse[String]): Either[GiphyException, Map[String, Any]] = {
+  private def handleResponse(response: HttpResponse[String]): GiphyResponse = {
     if (response.isError) {
       Left(new RequestException("Error when sending request to Giphy - " + response.statusLine))
     } else {
@@ -53,11 +55,11 @@ class Request(apiKey: String) {
    *               This an Option - Map[String, String] or None
    * @param resource Resource requested
    * @param method The Giphy endpoint method
-   * @return Either GiphyException, Map[String, Any]
+   * @return GiphyResponse
    */
   def makeNew(verb: String,
               params: Option[Map[String, String]],
-              resource: String, method: String): Either[GiphyException, Map[String, Any]] = {
+              resource: String, method: String): GiphyResponse = {
     val endpoint = buildApiEndpoint(resource, method)
     var queryParams = Map("api_key" -> apiKey)
 
@@ -75,13 +77,13 @@ class Request(apiKey: String) {
    * @param params Parameters to pass
    * @param resource Resource requested
    * @param method The Giphy endpoint method
-   * @return Either GiphyException, Map[String, Any]
+   * @return GiphyResponse
    */
   def validateAndMake(v: ValidationRule,
                       verb: String,
                       params: Option[Map[String, String]],
                       resource: String,
-                      method: String): Either[GiphyException, Map[String, Any]] = {
+                      method: String): GiphyResponse = {
     validator.validate(v) match {
       case Left(value) => Left(value)
       case Right(value) => makeNew(verb, params, resource, method)

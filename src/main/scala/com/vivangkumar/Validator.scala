@@ -1,5 +1,7 @@
 package com.vivangkumar
 
+import com.vivangkumar.Types.ValidationResponse
+
 abstract class ValidationRule
 
 /**
@@ -25,9 +27,9 @@ class Validator {
   /**
    * Performs the actual validation
    * @param v A ValidationRule
-   * @return Either [GiphyException, Boolean]
+   * @return ValidationResponse
    */
-  def validate(v: ValidationRule): Either[GiphyException, Boolean] = v match {
+  def validate(v: ValidationRule): ValidationResponse = v match {
     case CheckRequiredParams(param, map) =>
       if (map.contains(param) && param.nonEmpty) {
         Right(true)
