@@ -25,7 +25,7 @@ giphy.getGifById("GIF ID")
 ## API
 
 For parameters that can be passed to each method, refer to the [Giphy API Docs](https://github.com/Giphy/GiphyAPI)
-All responses are of type `Either[Error, Map[String, Any]]`.
+All responses are of type `Either[GiphyException, Map[String, Any]]`.
 
 You can then pattern match on the response for a `Left` or `Right` value and act on the result accordingly.
 
@@ -139,13 +139,14 @@ You can then pattern match on the response for a `Left` or `Right` value and act
 
 ## Notes
 
-- If the request is not successful, an `Error` will be accessible using the `Left` value.
-- Erros may be returned for two reasons. First, if something went wrong with the HTTP request.
+- If the request is not successful, a `GiphyException` will be accessible using the `Left` value.
+- Exceptions may be returned for two reasons. First, if something went wrong with the HTTP request.
   Second, if validation fails. That is, if required parameters are absent.
+- Two types of Exceptions are returned - `RequestException` and `ValidationException`; both of which inherit
+  from `GiphyException`
 
 ## TODO
 
-- Error classes
 - Potentially, include Async versions using `Futures`
 
   

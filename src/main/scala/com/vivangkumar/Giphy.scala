@@ -12,9 +12,9 @@ class Giphy(apiKey: String) {
    *               'limit' -> number of results to return
    *               'offset' -> results offset
    *               'rating' -> (y,g, pg, pg-13 or r)
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def search(params: Map[String, String]): Either[Error, Map[String, Any]] = {
+  def search(params: Map[String, String]): Either[GiphyException, Map[String, Any]] = {
     val validation = CheckRequiredParams("q", params)
     ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "gifs", "search")
   }
@@ -22,9 +22,9 @@ class Giphy(apiKey: String) {
   /**
    * Get a GIF by ID
    * @param gifId ID of the gif requested
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def getGifById(gifId: String): Either[Error, Map[String, Any]]  = {
+  def getGifById(gifId: String): Either[GiphyException, Map[String, Any]]  = {
     val validation = CheckEmptyParam(gifId)
     ApiRequest(apiKey).validateAndMake(validation, "GET", None, "gifs", gifId)
   }
@@ -32,9 +32,9 @@ class Giphy(apiKey: String) {
   /**
    * Get multiple GIF by ID's
    * @param gifIds List of gif ids
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def getGifsById(gifIds: List[String]): Either[Error, Map[String, Any]]  = {
+  def getGifsById(gifIds: List[String]): Either[GiphyException, Map[String, Any]]  = {
     val validation = CheckList(gifIds)
     val params = Map("ids" -> gifIds.mkString(","))
     ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "gifs", "")
@@ -46,9 +46,9 @@ class Giphy(apiKey: String) {
    *               's'-> term or phrase to translate into a GIF
    *               'rating' -> limit results to those rated
    *                           (y,g, pg, pg-13 or r)
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def translate(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
+  def translate(params: Map[String, String]): Either[GiphyException, Map[String, Any]]  = {
     val validation = CheckRequiredParams("s", params)
     ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "gifs", "translate")
   }
@@ -59,9 +59,9 @@ class Giphy(apiKey: String) {
    *               'tag' -> the GIF tag to limit randomness by
    *               'rating' -> limit results to those rated
    *                           (y,g, pg, pg-13 or r)
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def random(params: Option[Map[String, String]]): Either[Error, Map[String, Any]]  = {
+  def random(params: Option[Map[String, String]]): Either[GiphyException, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", params, "gifs", "random")
   }
 
@@ -70,9 +70,9 @@ class Giphy(apiKey: String) {
    * @param params Options to send to the trending endpoint
    *               'limit' -> limits the number of results returned
    *                          By default returns 25 results
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def trending(params: Option[Map[String, String]]): Either[Error, Map[String, Any]]  = {
+  def trending(params: Option[Map[String, String]]): Either[GiphyException, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", params, "gifs", "trending")
   }
 
@@ -83,9 +83,9 @@ class Giphy(apiKey: String) {
    *               'limit' -> number of results to return
    *               'offset' -> results offset
    *               'rating' -> (y,g, pg, pg-13 or r)
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def searchStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
+  def searchStickers(params: Map[String, String]): Either[GiphyException, Map[String, Any]]  = {
     val validation = CheckRequiredParams("q", params)
     ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "stickers", "search")
   }
@@ -96,9 +96,9 @@ class Giphy(apiKey: String) {
    *              'tag' -> the GIF tag to limit randomness by
    *              'rating' -> limit results to those rated
    *                          (y,g, pg, pg-13 or r)
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def randomSticker(params: Option[Map[String, String]]): Either[Error, Map[String, Any]]  = {
+  def randomSticker(params: Option[Map[String, String]]): Either[GiphyException, Map[String, Any]]  = {
     ApiRequest(apiKey).makeNew("GET", params, "stickers", "random")
   }
 
@@ -111,9 +111,9 @@ class Giphy(apiKey: String) {
    *               'fmt' -> Format (HTML or JSON)
    *               'rating' -> limit results to those rated
    *                           (y,g, pg, pg-13 or r)
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def trendingStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
+  def trendingStickers(params: Map[String, String]): Either[GiphyException, Map[String, Any]]  = {
     val validation = CheckRequiredParams("s", params)
     ApiRequest(apiKey).validateAndMake(validation,"GET", Some(params), "stickers", "trending")
   }
@@ -122,9 +122,9 @@ class Giphy(apiKey: String) {
    * Query the sticker translate endpoint
    * @param params Options to query the endpoint with
    *               's' -> term or phrase to translate into GIF
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  def translateStickers(params: Map[String, String]): Either[Error, Map[String, Any]]  = {
+  def translateStickers(params: Map[String, String]): Either[GiphyException, Map[String, Any]]  = {
     val validation = CheckRequiredParams("s", params)
     ApiRequest(apiKey).validateAndMake(validation, "GET", Some(params), "stickers", "translate")
   }

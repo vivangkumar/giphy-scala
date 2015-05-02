@@ -36,11 +36,11 @@ class Request(apiKey: String) {
   /**
    * Handle HTTP responses
    * @param response The HTTP response object
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
-  private def handleResponse(response: HttpResponse[String]): Either[Error, Map[String, Any]] = {
+  private def handleResponse(response: HttpResponse[String]): Either[GiphyException, Map[String, Any]] = {
     if (response.isError) {
-      Left(new Error("Error when sending request to Giphy - " + response.statusLine))
+      Left(new RequestException("Error when sending request to Giphy - " + response.statusLine))
     } else {
       Right(parse(response.body).extract[Map[String, Any]])
     }
@@ -53,11 +53,11 @@ class Request(apiKey: String) {
    *               This an Option - Map[String, String] or None
    * @param resource Resource requested
    * @param method The Giphy endpoint method
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
   def makeNew(verb: String,
               params: Option[Map[String, String]],
-              resource: String, method: String): Either[Error, Map[String, Any]] = {
+              resource: String, method: String): Either[GiphyException, Map[String, Any]] = {
     val endpoint = buildApiEndpoint(resource, method)
     var queryParams = Map("api_key" -> apiKey)
 
@@ -75,13 +75,13 @@ class Request(apiKey: String) {
    * @param params Parameters to pass
    * @param resource Resource requested
    * @param method The Giphy endpoint method
-   * @return Either Error, Map[String, Any]
+   * @return Either GiphyException, Map[String, Any]
    */
   def validateAndMake(v: ValidationRule,
                       verb: String,
                       params: Option[Map[String, String]],
                       resource: String,
-                      method: String): Either[Error, Map[String, Any]] = {
+                      method: String): Either[GiphyException, Map[String, Any]] = {
     validator.validate(v) match {
       case Left(value) => Left(value)
       case Right(value) => makeNew(verb, params, resource, method)

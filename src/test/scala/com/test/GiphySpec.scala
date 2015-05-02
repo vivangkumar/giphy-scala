@@ -1,5 +1,6 @@
 package com.test
-import com.vivangkumar.Giphy
+
+import com.vivangkumar.{ValidationException, RequestException, GiphyException, Giphy}
 import org.scalatest._
 import Matchers._
 
@@ -7,11 +8,11 @@ class GiphySpec extends FunSpec with EitherValues {
 
   describe("Giphy") {
     val giphy = new Giphy("dc6zaTOxFJmzC")
-    it("should throw an error for an illegal api key when a method is called") {
+    it("should return a RequestException for an illegal api key when a method is called") {
       val giphy = new Giphy("somekey")
       val search = giphy.search(Map("q" -> "star wars"))
 
-      search.left.value shouldBe a [Error]
+      search.left.value shouldBe a [RequestException]
     }
 
     describe("#search") {
@@ -21,10 +22,10 @@ class GiphySpec extends FunSpec with EitherValues {
         response.right.value shouldBe a [Map[_, _]]
       }
 
-      it("should return an error if there was a validation failure") {
+      it("should return aValidationException if there was a validation failure") {
         val response = giphy.search(Map("limit" -> "25"))
 
-        response.left.value shouldBe a [Error]
+        response.left.value shouldBe a [ValidationException]
       }
     }
 
@@ -35,10 +36,10 @@ class GiphySpec extends FunSpec with EitherValues {
         response.right.value shouldBe a [Map[_, _]]
       }
 
-      it("should return an error if the ID is empty") {
+      it("should return a ValidationException if the ID is empty") {
         val response = giphy.getGifById("")
 
-        response.left.value shouldBe a [Error]
+        response.left.value shouldBe a [ValidationException]
       }
     }
 
@@ -49,10 +50,10 @@ class GiphySpec extends FunSpec with EitherValues {
         response.right.value shouldBe a [Map[_, _]]
       }
 
-      it("should return an error on passing an empty list") {
+      it("should return a ValidationException on passing an empty list") {
         val response = giphy.getGifsById(List())
 
-        response.left.value shouldBe a [Error]
+        response.left.value shouldBe a [ValidationException]
       }
     }
 
@@ -63,10 +64,10 @@ class GiphySpec extends FunSpec with EitherValues {
         response.right.value shouldBe a [Map[_, _]]
       }
 
-      it("should return an error when a required param is missing") {
+      it("should return a ValidationException when a required param is missing") {
         val response = giphy.translate(Map("limit" -> "25"))
 
-        response.left.value shouldBe a [Error]
+        response.left.value shouldBe a [ValidationException]
       }
     }
 
@@ -93,10 +94,10 @@ class GiphySpec extends FunSpec with EitherValues {
         response.right.value shouldBe a [Map[_, _]]
       }
 
-      it("should return an error if there was a validation failure") {
+      it("should return a ValidationException if there was a validation failure") {
         val response = giphy.searchStickers(Map("limit" -> "25"))
 
-        response.left.value shouldBe a [Error]
+        response.left.value shouldBe a [ValidationException]
       }
     }
 
@@ -115,10 +116,10 @@ class GiphySpec extends FunSpec with EitherValues {
         response.right.value shouldBe a [Map[_, _]]
       }
 
-      it("should return an error when a required param is missing") {
+      it("should return a ValidationException when a required param is missing") {
         val response = giphy.trendingStickers(Map("limit" -> "25"))
 
-        response.left.value shouldBe a [Error]
+        response.left.value shouldBe a [ValidationException]
       }
     }
 
@@ -129,10 +130,10 @@ class GiphySpec extends FunSpec with EitherValues {
         response.right.value shouldBe a [Map[_, _]]
       }
 
-      it("should return an error when a required param is missing") {
+      it("should return a ValidationException when a required param is missing") {
         val response = giphy.translateStickers(Map("limit" -> "25"))
 
-        response.left.value shouldBe a [Error]
+        response.left.value shouldBe a [ValidationException]
       }
     }
   }
